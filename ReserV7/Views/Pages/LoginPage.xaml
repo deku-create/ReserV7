@@ -16,9 +16,7 @@
   mc:Ignorable="d"
 >
     <Grid Margin="20">
-        <Grid.Background>
-            <ImageBrush ImageSource="/Assets/lo.jpg" Stretch="UniformToFill"/>
-        </Grid.Background>
+        
 
         <Border
             HorizontalAlignment="Center"

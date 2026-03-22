@@ -1,0 +1,139 @@
+<Page
+  x:Class="Spacium.Views.Pages.RoomsPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:Spacium.Views.Pages"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+  Title="Gestion Salles"
+  d:DataContext="{d:DesignInstance local:RoomsPage,
+                                     IsDesignTimeCreatable=False}"
+  d:DesignHeight="600"
+  d:DesignWidth="1200"
+  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+  ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+  mc:Ignorable="d"
+>
+  <Grid RowDefinitions="Auto,*">
+    <!-- Header Section -->
+    <StackPanel Grid.Row="0" Margin="20">
+      <TextBlock FontSize="28" FontWeight="Bold" Text="Gestion des Salles" />
+      <TextBlock FontSize="14" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Créez, modifiez et supprimez les salles disponibles" Margin="0,4,0,0" />
+
+      <!-- Search and Add Button -->
+      <Grid ColumnDefinitions="*,Auto,Auto" Margin="0,12,0,0">
+        <TextBox 
+          Grid.Column="0"
+          x:Name="SearchBox"
+          Text="{Binding ViewModel.SearchText, Mode=TwoWay}"
+          Padding="12,8"
+          VerticalAlignment="Center" />
+        <ui:Button
+          Grid.Column="1"
+          Margin="12,0,0,0"
+          Appearance="Secondary"
+          Command="{Binding ViewModel.SearchCommand}"
+          Content="Chercher"
+          Icon="Search24" />
+        <ui:Button
+          Grid.Column="2"
+          Margin="12,0,0,0"
+          Appearance="Primary"
+          Command="{Binding ViewModel.AddRoomCommand}"
+          Content="Ajouter Salle"
+          Icon="Add24" />
+      </Grid>
+      <TextBlock 
+        FontSize="12" 
+        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+        Text="💡 Tip: Vous pouvez chercher par nom de salle, description, type ou équipements" 
+        Margin="0,8,0,0" />
+    </StackPanel>
+
+    <!-- Rooms Table -->
+    <DataGrid
+      Grid.Row="1"
+      AutoGenerateColumns="False"
+      Background="{DynamicResource ControlBackgroundBrush}"
+      BorderBrush="{DynamicResource ControlBorderBrush}"
+      BorderThickness="1"
+      CanUserAddRows="False"
+      Margin="20,0,20,20"
+      ItemsSource="{Binding ViewModel.FilteredSalles, Mode=OneWay}"
+      RowHeaderWidth="0">
+      <DataGrid.Columns>
+        <!-- Nom -->
+        <DataGridTextColumn 
+          Binding="{Binding Nom}" 
+          Header="Nom" 
+          MinWidth="120"
+          IsReadOnly="True" />
+
+        <!-- Capacité -->
+        <DataGridTextColumn 
+          Binding="{Binding Capacite}" 
+          Header="Capacité" 
+          MinWidth="80"
+          IsReadOnly="True" />
+
+        <!-- Type -->
+        <DataGridTextColumn 
+          Binding="{Binding Type}" 
+          Header="Type" 
+          MinWidth="120"
+          IsReadOnly="True" />
+
+        <!-- Étage -->
+        <DataGridTextColumn 
+          Binding="{Binding Etage}" 
+          Header="Étage" 
+          MinWidth="60"
+          IsReadOnly="True" />
+
+        <!-- Disponibilité -->
+        <DataGridCheckBoxColumn 
+          Binding="{Binding Disponibilite, Mode=OneWay}" 
+          Header="Disponibilité" 
+          MinWidth="100"
+          IsReadOnly="True" />
+
+        <!-- Équipements -->
+        <DataGridTextColumn 
+          Binding="{Binding EquipementCount, StringFormat='Nbre: {0}'}" 
+          Header="Équipements" 
+          MinWidth="100"
+          IsReadOnly="True" />
+
+        <!-- Actions -->
+        <DataGridTemplateColumn Header="Actions" MinWidth="180">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <ui:Button
+                  Margin="0,0,8,0"
+                  Appearance="Secondary"
+                  Command="{Binding DataContext.ViewModel.EditRoomCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                  CommandParameter="{Binding}"
+                  ToolTip="Éditer cette salle"
+                  Icon="Edit24"
+                  Content="Éditer"
+                  Padding="12,8" />
+                <ui:Button
+                  Appearance="Secondary"
+                  Command="{Binding DataContext.ViewModel.DeleteRoomCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                  CommandParameter="{Binding}"
+                  ToolTip="Supprimer cette salle"
+                  Icon="Delete24"
+                  Content="Supprimer"
+                  Padding="12,8" />
+              </StackPanel>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</Page>
+

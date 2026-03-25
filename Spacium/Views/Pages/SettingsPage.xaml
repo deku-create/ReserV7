@@ -41,6 +41,8 @@
     />
     <TextBlock Margin="0,24,0,0" FontSize="20" FontWeight="Medium" Text="About Spacium" />
     <TextBlock Margin="0,12,0,0" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
-  </StackPanel>
+    <TextBlock Margin="0,12,0,0" Text="Spacium est un systeme de rservation de salle moderne creer"  />
+    <TextBlock Margin="0,0,0,0" Text="par un groupe de jeune motiver dans le but de rpondre a un besoin important dans le planning des salles."  />
+    </StackPanel>
 </Page>
 

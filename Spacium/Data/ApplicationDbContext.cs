@@ -60,8 +60,7 @@ namespace Spacium.Data
                 .HasIndex(s => s.Nom)
                 .IsUnique();
 
-            // Note: All seed data is now handled by the initialize_database.sql script
-            // This DbContext only defines the relationships and indices
+            
         }
     }
 }

@@ -32,7 +32,11 @@ namespace Spacium
             .ConfigureServices((context, services) =>
             {
                 // Database
-                var dbPath = Path.Combine(AppContext.BaseDirectory, "app.db");
+                var dbPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "Spacium",
+                    "app.db"
+                );
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlite($"Data Source={dbPath}"));
 

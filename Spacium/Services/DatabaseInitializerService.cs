@@ -14,7 +14,12 @@ namespace Spacium.Services
         public DatabaseInitializerService(ApplicationDbContext context)
         {
             _context = context;
-            _dbPath = Path.Combine(AppContext.BaseDirectory, "app.db");
+            // recherche du chemin d'accès à la base de données dans le dossier AppData pour éviter les problèmes de permissions
+            _dbPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Spacium",
+                "app.db"
+            );
         }
 
         public async Task InitializeAsync()
@@ -23,7 +28,7 @@ namespace Spacium.Services
             {
                 // Check if database file exists
                 bool databaseExists = File.Exists(_dbPath);
-
+                Directory.CreateDirectory(Path.GetDirectoryName(_dbPath));
                 if (!databaseExists)
                 {
                     // Database doesn't exist, create and initialize it with SQL script
